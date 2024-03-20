@@ -9,7 +9,8 @@ class EventController extends Controller
 {
     public function index()
     {
-        // Code to retrieve events and display them in the weekly calendar view
+        $events = Event::whereBetween('start_time', [now()->startOfWeek(), now()->endOfWeek()])->get();
+        return view('events.index', compact('events'));
     }
 
     public function store(Request $request)
