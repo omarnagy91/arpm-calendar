@@ -9,28 +9,34 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::whereBetween('start_time', [now()->startOfWeek(), now()->endOfWeek()])->get();
+        $events = Event::all();
         return view('events.index', compact('events'));
     }
 
     public function store(Request $request)
     {
-        // Code to add a new event
-        $event = new Event();
-        $event->title = $request->title;
-        $event->description = $request->description;
-        $event->start_time = $request->start_time;
-        $event->end_time = $request->end_time;
-        $event->save();
-
-        return redirect()->back();
+        Event::create($request->all());
+        return redirect()->route('events.index');
     }
 
     public function destroy(Event $event)
     {
-        // Code to delete an event
         $event->delete();
-
-        return redirect()->back();
+        return redirect()->route('events.index');
     }
+    public function create()
+{
+    return view('events.create');
+}
+
+public function edit(Event $event)
+{
+    return view('events.edit', compact('event'));
+}
+
+public function update(Request $request, Event $event)
+{
+    $event->update($request->all());
+    return redirect()->route('events.index')->with('success', 'Event updated successfully');
+}
 }

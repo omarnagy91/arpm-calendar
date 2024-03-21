@@ -20,3 +20,6 @@ Route::get('/', function () {
 Route::get('/events', [EventController::class, 'index']);
 Route::post('/events', [EventController::class, 'store']);
 Route::delete('/events/{event}', [EventController::class, 'destroy']);
+Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
